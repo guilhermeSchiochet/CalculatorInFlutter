@@ -140,6 +140,9 @@ bool Win32Window::Create(const std::wstring& title,
       Scale(size.width, scale_factor), Scale(size.height, scale_factor),
       nullptr, nullptr, GetModuleHandle(nullptr), this);
 
+  // Remove the title bar
+  SetWindowLong(window, GWL_STYLE, GetWindowLong(window, GWL_STYLE) & ~WS_CAPTION);
+
   if (!window) {
     return false;
   }
