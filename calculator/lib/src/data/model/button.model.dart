@@ -1,5 +1,5 @@
 
-import 'package:calculator/src/utils/enum/button_type_enum.dart';
+import 'package:calculator/src/utils/enum/button_type.enum.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorButtonModel {
