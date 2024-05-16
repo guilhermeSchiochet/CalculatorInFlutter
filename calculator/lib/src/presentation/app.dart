@@ -1,5 +1,5 @@
 import 'package:calculator/src/config/themes/app_theme.dart';
-import 'package:calculator/src/presentation/screens/home_screen.dart';
+import 'package:calculator/src/presentation/view/home_page.view.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      home: const HomeScreen(),
+      home: const HomePageView(),
     );
   }
 }
