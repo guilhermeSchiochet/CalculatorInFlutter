@@ -39,7 +39,7 @@ abstract class AppTheme {
         elevation: 0,
         color: Colors.black,
       ),
-      scaffoldBackgroundColor: Colors.grey.shade900,
+      scaffoldBackgroundColor: Colors.black,
       primaryColor: Colors.black,
       splashColor: Colors.transparent,
       fontFamily: 'IBM',
