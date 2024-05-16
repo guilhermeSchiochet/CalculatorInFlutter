@@ -1,6 +1,6 @@
     
-import 'package:calculator/src/data/model/button_model.dart';
-import 'package:calculator/src/utils/enum/button_type_enum.dart';
+import 'package:calculator/src/data/model/button.model.dart';
+import 'package:calculator/src/utils/enum/button_type.enum.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -34,7 +34,7 @@ class ItemCalculadora {
       CalculatorButtonModel(text: '', type: ButtonTypeEnum.Number),
       CalculatorButtonModel(text: '0', type: ButtonTypeEnum.Number),
       CalculatorButtonModel(text: '.', type: ButtonTypeEnum.Number),
-      CalculatorButtonModel(icon: FontAwesomeIcons.equals, type: ButtonTypeEnum.Operator),
+      CalculatorButtonModel(icon: FontAwesomeIcons.equals, type: ButtonTypeEnum.Equals),
     ],
   ];
 
