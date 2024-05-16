@@ -1,13 +1,34 @@
+import 'package:calculator/src/data/model/button.model.dart';
+import 'package:calculator/src/data/repository/calculator.repository.dart';
+import 'package:calculator/src/presentation/widgets/calculator_button.widget.dart';
+import 'package:calculator/src/utils/constants/item_calculadora.dart';
+import 'package:calculator/src/utils/extensions/button_type.extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late CalculatorRepository _calculatorRepository;
+  final  _displayValue = ValueNotifier<String>('0');
+
+  @override
+  void initState() {
+    _calculatorRepository = CalculatorRepository();
+    super.initState();
+  }
+
+  void _onButtonPressed(CalculatorButtonModel button) {
+    if(button.text != null) {
+      _displayValue.value += button.text!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,14 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           Expanded(
+            flex: 2,
             child: Container(
-              padding: EdgeInsets.all(20.0),
-              alignment: Alignment.centerRight,
-              child: Text(
-                "0",
-                style: TextStyle(
-                  fontSize: 48.0,
-                  fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.all(22.0),
+              alignment: Alignment.bottomRight,
+              child: ValueListenableBuilder<String>(
+                valueListenable: _displayValue,
+                builder: (context, value, child) => Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 48.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -39,76 +65,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildButtonGrid() {
-    List<List<String>> buttonRows = [
-      ["7", "8", "9", "/"],
-      ["4", "5", "6", "x"],
-      ["1", "2", "3", "-"],
-      ["C", "0", "=", "+"],
-    ];
-
     return Expanded(
+      flex: 3,
       child: GridView.builder(
-        padding: EdgeInsets.all(20.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(20.0),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 17.0,
+          mainAxisSpacing: 17.0,
         ),
-        itemCount: buttonRows.length * 4,
+        itemCount: ItemCalculadora.buttonRows.length * 4,
         itemBuilder: (BuildContext context, int index) {
           int row = index ~/ 4;
           int col = index % 4;
-          String buttonText = buttonRows[row][col];
-          return CalculatorButton(
-            text: buttonText,
-            onPressed: () => _onButtonPressed(buttonText),
+
+          return CalculatorButtonWidget(
+            button: ItemCalculadora.buttonRows[row][col],
+            onPressed: () => _onButtonPressed(ItemCalculadora.buttonRows[row][col]),
           );
         },
       ),
     );
-  }
-
-  void _onButtonPressed(String buttonText) {
-    // Implementar a lógica para processar o pressionamento do botão aqui
-    print("Botão pressionado: $buttonText");
-  }
-}
-
-class CalculatorButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-
-  const CalculatorButton({
-    required this.text,
-    required this.onPressed,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(10.0),
-      child: Ink(
-        decoration: BoxDecoration(
-          color: _isOperator(text) ? Colors.orange : Colors.grey[300],
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).textScaler.scale(24.0),
-              fontWeight: FontWeight.bold,
-              color: _isOperator(text) ? Colors.white : Colors.black,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  bool _isOperator(String text) {
-    return ["+", "-", "x", "/"].contains(text);
   }
 }
