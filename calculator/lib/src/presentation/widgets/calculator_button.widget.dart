@@ -3,8 +3,8 @@ import 'package:calculator/src/utils/extensions/button_type.extension.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorButtonWidget extends StatelessWidget {
-  final CalculatorButtonModel button;
   final VoidCallback onPressed;
+  final CalculatorButtonModel button;
 
   const CalculatorButtonWidget({
     required this.button,
@@ -34,7 +34,7 @@ class CalculatorButtonWidget extends StatelessWidget {
       return Text(
         button.text!,
         style: TextStyle(
-          fontSize: MediaQuery.of(context).textScaleFactor * 24.0,
+          fontSize: MediaQuery.of(context).textScaler.scale(24.0),
           fontWeight: FontWeight.bold,
           color: button.type.getTextColor(),
         ),
@@ -43,7 +43,7 @@ class CalculatorButtonWidget extends StatelessWidget {
       return Icon(
         button.icon,
         color: button.type.getIconColor(),
-        size: MediaQuery.of(context).textScaleFactor * 24.0,
+        size: MediaQuery.of(context).textScaler.scale(24.0),
       );
     }
     return const SizedBox.shrink();
